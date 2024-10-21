@@ -5,7 +5,6 @@ const Logout = () => {
   const navigation = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("tasks");
     localStorage.removeItem("isAuthenticated");
     navigation("/");
   };

@@ -24,8 +24,6 @@ describe("Logout", () => {
 
   it("handles logout", () => {
     fireEvent.click(screen.getByRole("button", { name: "Logout" }));
-
-    expect(localStorage.getItem("tasks")).toBe(null);
     expect(localStorage.getItem("isAuthenticated")).toBe(null);
     expect(mockNavigate).toHaveBeenCalledWith("/");
   });
