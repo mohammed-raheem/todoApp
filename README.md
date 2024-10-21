@@ -33,8 +33,8 @@ A modern, responsive Todo List application built with React, TypeScript, and Red
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/todo-list-app.git
-   cd todo-list-app
+   git clone https://github.com/mohammed-raheem/todoApp.git
+   cd todoApp
    ```
 
 2. Install dependencies:
