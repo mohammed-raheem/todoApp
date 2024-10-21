@@ -52,7 +52,7 @@ function Login() {
           <input
             className={styles.input}
             type="password"
-            placeholder="Passowrd"
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className={styles.submit} type="submit">
