@@ -1,0 +1,19 @@
+.filters {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #cccfff;
+  background-color: #cccddf;
+  outline: none;
+}
+
+.filters:hover {
+  background-color: #cccfff;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  .filters {
+    padding: 5px 10px;
+  }
+}

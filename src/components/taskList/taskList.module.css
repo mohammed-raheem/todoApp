@@ -1,0 +1,161 @@
+.taskList {
+  background-color: #f8f8ff;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.title {
+  text-align: center;
+  color: #646681;
+  margin: 0 0 40px 0;
+  text-transform: uppercase;
+}
+
+.controllers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addBtn {
+  background-color: #6370f0;
+  color: #fff;
+  border: 1px solid #838ef1;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addBtn:hover {
+  background-color: #838ef1;
+}
+
+.tasks {
+  background-color: #ecedf6;
+  padding: 20px;
+  border-radius: 5px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.task:last-of-type {
+  margin-bottom: 0;
+}
+
+.taskTitle,
+.taskBtns {
+  display: flex;
+  align-items: center;
+}
+
+.taskTitle {
+  gap: 5px;
+}
+
+.taskBtns {
+  gap: 10px;
+}
+
+.taskTitle input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.taskTitle input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+.taskTitle span {
+  color: #646681;
+}
+
+.editBtn,
+.deleteBtn {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: #eee;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.taskBtns img {
+  width: 100%;
+  height: auto;
+}
+
+.editBtn img {
+  width: 75%;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+  background-color: #f8f8ff;
+}
+
+/* small screens */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .addBtn {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .tasks {
+    padding: 10px;
+  }
+
+  .task {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .taskTitle {
+    gap: 5px;
+  }
+
+  .taskBtns {
+    gap: 5px;
+  }
+
+  .editBtn,
+  .deleteBtn {
+    width: 25px;
+    height: 25px;
+  }
+
+  .editBtn img {
+    width: 50%;
+  }
+}
