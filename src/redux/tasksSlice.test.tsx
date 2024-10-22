@@ -4,12 +4,7 @@ import tasksReducer, {
   deleteTask,
   completeTask,
 } from "./tasksSlice";
-
-type Task = {
-  id: number;
-  title: string;
-  completed: boolean;
-};
+import { Task } from "../types";
 
 describe("tasks reducer", () => {
   const initialState: Task[] = [];

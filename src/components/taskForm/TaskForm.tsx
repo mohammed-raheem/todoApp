@@ -1,48 +1,50 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import { RootState, Task } from "../../types";
+import { addTask, editTask } from "../../redux/tasksSlice";
 import Logout from "../logout/Logout";
 import NotificationPopup from "../notificationPopup/NotificationPopup";
 import useAuthenticated from "../../hooks/useAuthenticated";
 import styles from "./taskForm.module.css";
 
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
 function TaskForm() {
   const isAuthenticated = useAuthenticated();
-  const { taskId } = useParams();
-  const tasks = useSelector((state: { tasks: Task[] }) => state.tasks);
-  const taskTitle = tasks.find(
-    (task: Task) => task.id === Number(taskId)
-  )?.title;
+  const { taskId } = useParams<{ taskId: string }>();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isEdit = taskId !== undefined;
-  const currentTask = taskId ? taskTitle : "";
-  const [task, setTask] = useState(currentTask);
+  const tasks = useSelector((state: RootState) => state.tasks);
+
+  const [task, setTask] = useState("");
   const [isNotificationVisible, setNotificationVisible] = useState(false);
+
+  const isEdit = taskId !== undefined;
+
+  useEffect(() => {
+    if (isEdit) {
+      const existingTask = tasks.find((t) => t.id === Number(taskId));
+      if (existingTask) {
+        setTask(existingTask.title);
+      } else {
+        navigate("/tasks");
+      }
+    }
+  }, [isEdit, taskId, tasks, navigate]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (isEdit) {
+      dispatch(editTask({ id: Number(taskId), title: task }));
+    } else {
+      dispatch(addTask(task));
+      setTask("");
+    }
 
     setNotificationVisible(true);
     setTimeout(() => {
       setNotificationVisible(false);
     }, 2000);
-
-    if (isEdit) {
-      dispatch({
-        type: "tasks/editTask",
-        payload: { id: Number(taskId), title: task },
-      });
-    } else {
-      dispatch({ type: "tasks/addTask", payload: task });
-      setTask("");
-    }
   };
 
   if (!isAuthenticated) {
@@ -69,7 +71,6 @@ function TaskForm() {
           <button className={styles.addBtn}>{isEdit ? "Edit" : "Add"}</button>
         </form>
       </div>
-
       <NotificationPopup
         message={
           isEdit ? "Task updated successfully" : "Task added successfully"

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { NotificationPopupProps } from "../../types";
 import styles from "./notificationPopup.module.css";
-
-interface NotificationPopupProps {
-  message: string;
-  isVisible: boolean;
-}
 
 const NotificationPopup: React.FC<NotificationPopupProps> = ({
   message,

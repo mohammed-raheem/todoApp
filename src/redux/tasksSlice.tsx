@@ -1,53 +1,49 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Task } from "../types";
 
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+const getInitialState = (): Task[] => {
+  const storedTasks = localStorage.getItem("tasks");
+  return storedTasks ? JSON.parse(storedTasks) : [];
+};
 
-const tasks = localStorage.getItem("tasks")
-  ? JSON.parse(localStorage.getItem("tasks")!)
-  : [];
-const initialState: Task[] = tasks;
+const saveTasksToLocalStorage = (tasks: Task[]) => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
 
 export const tasksSlice = createSlice({
   name: "tasks",
-  initialState,
+  initialState: getInitialState(),
   reducers: {
-    addTask: (state, action) => {
+    addTask: (state, action: PayloadAction<string>) => {
       const newTask: Task = {
         id: Date.now(),
         title: action.payload,
         completed: false,
       };
-
       state.push(newTask);
-      localStorage.setItem("tasks", JSON.stringify(state));
+      saveTasksToLocalStorage(state);
     },
-
-    editTask: (state, action) => {
+    editTask: (state, action: PayloadAction<{ id: number; title: string }>) => {
       const { id, title } = action.payload;
       const task = state.find((task) => task.id === id);
       if (task) {
         task.title = title;
+        saveTasksToLocalStorage(state);
       }
-      localStorage.setItem("tasks", JSON.stringify(state));
     },
-
-    deleteTask: (state, action) => {
-      const taskId = action.payload;
-      const index = state.findIndex((task) => task.id === taskId);
-      state.splice(index, 1);
-      localStorage.setItem("tasks", JSON.stringify(state));
+    deleteTask: (state, action: PayloadAction<number>) => {
+      const index = state.findIndex((task) => task.id === action.payload);
+      if (index !== -1) {
+        state.splice(index, 1);
+        saveTasksToLocalStorage(state);
+      }
     },
-
-    completeTask: (state, action) => {
+    completeTask: (state, action: PayloadAction<number>) => {
       const task = state.find((task) => task.id === action.payload);
       if (task) {
         task.completed = !task.completed;
+        saveTasksToLocalStorage(state);
       }
-      localStorage.setItem("tasks", JSON.stringify(state));
     },
   },
 });

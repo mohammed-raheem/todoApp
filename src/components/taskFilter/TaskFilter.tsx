@@ -1,15 +1,5 @@
+import { TaskFilterProps } from "../../types";
 import styles from "./taskFilter.module.css";
-
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
-interface TaskFilterProps {
-  tasks: Task[];
-  setFilteredTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-}
 
 function TaskFilter({ tasks, setFilteredTasks }: TaskFilterProps) {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {

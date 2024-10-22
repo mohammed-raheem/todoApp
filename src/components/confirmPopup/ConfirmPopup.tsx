@@ -1,12 +1,7 @@
+import { ConfirmPopupProps } from "../../types";
 import styles from "./confirmPopup.module.css";
 
-interface Props {
-  message: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
-
-function ConfirmPopup({ message, onConfirm, onCancel }: Props) {
+function ConfirmPopup({ message, onConfirm, onCancel }: ConfirmPopupProps) {
   return (
     <div className={styles.confirmPopup}>
       <div className={styles.container}>
