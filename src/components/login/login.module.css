@@ -52,3 +52,10 @@
 .submit:hover {
   background-color: #0056b3;
 }
+
+/* small screens */
+@media (max-width: 768px) {
+  .loginBox {
+    width: 80%;
+  }
+}
