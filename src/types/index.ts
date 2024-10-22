@@ -8,9 +8,12 @@ export interface RootState {
   tasks: Task[];
 }
 
+export type FilterValue = "all" | "completed" | "pending";
+
 export interface TaskFilterProps {
   tasks: Task[];
   setFilteredTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setCurrentFilter: React.Dispatch<React.SetStateAction<FilterValue>>;
 }
 
 export interface ConfirmPopupProps {

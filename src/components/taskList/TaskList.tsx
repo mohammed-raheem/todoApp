@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, Task } from "../../types";
+import { RootState, Task, FilterValue } from "../../types";
 import { completeTask, deleteTask } from "../../redux/tasksSlice";
 import useAuthenticated from "../../hooks/useAuthenticated";
 import Logout from "../logout/Logout";
@@ -22,10 +22,17 @@ function TaskList() {
   const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
   const [taskToComplete, setTaskToComplete] = useState<number | null>(null);
   const [deletingTaskId, setDeletingTaskId] = useState<number | null>(null);
+  const [currentFilter, setCurrentFilter] = useState<FilterValue>("all");
 
   useEffect(() => {
-    setFilteredTasks(tasks);
-  }, [tasks]);
+    setFilteredTasks(
+      tasks.filter((task) => {
+        if (currentFilter === "completed") return task.completed;
+        if (currentFilter === "pending") return !task.completed;
+        return true;
+      })
+    );
+  }, [tasks, currentFilter]);
 
   const handleShowCompletePopup = (id: number) => {
     setShowCompletePopup(true);
@@ -70,7 +77,11 @@ function TaskList() {
           <Link to="/tasks/addTask" className={styles.addBtn}>
             Add Task
           </Link>
-          <TaskFilter tasks={tasks} setFilteredTasks={setFilteredTasks} />
+          <TaskFilter
+            tasks={tasks}
+            setFilteredTasks={setFilteredTasks}
+            setCurrentFilter={setCurrentFilter}
+          />
         </div>
         <ul className={styles.tasks}>
           {filteredTasks.length === 0 && (

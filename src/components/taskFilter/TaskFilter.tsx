@@ -1,17 +1,22 @@
-import { TaskFilterProps } from "../../types";
+import { TaskFilterProps, FilterValue } from "../../types";
 import styles from "./taskFilter.module.css";
 
-function TaskFilter({ tasks, setFilteredTasks }: TaskFilterProps) {
+function TaskFilter({
+  tasks,
+  setFilteredTasks,
+  setCurrentFilter,
+}: TaskFilterProps) {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+    const value = e.target.value as FilterValue;
 
-    if (value === "completed") {
-      setFilteredTasks(tasks.filter((task) => task.completed));
-    } else if (value === "pending") {
-      setFilteredTasks(tasks.filter((task) => !task.completed));
-    } else {
-      setFilteredTasks(tasks);
-    }
+    setCurrentFilter(value);
+    setFilteredTasks(
+      tasks.filter((task) => {
+        if (value === "completed") return task.completed;
+        if (value === "pending") return !task.completed;
+        return true;
+      })
+    );
   };
 
   return (
