@@ -21,6 +21,7 @@ function TaskList() {
   const [showCompletePopup, setShowCompletePopup] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<number | null>(null);
   const [taskToComplete, setTaskToComplete] = useState<number | null>(null);
+  const [deletingTaskId, setDeletingTaskId] = useState<number | null>(null);
 
   useEffect(() => {
     setFilteredTasks(tasks);
@@ -46,9 +47,13 @@ function TaskList() {
 
   const handleDelete = () => {
     if (taskToDelete !== null) {
-      dispatch(deleteTask(taskToDelete));
-      setShowDeletePopup(false);
-      setTaskToDelete(null);
+      setDeletingTaskId(taskToDelete);
+      setTimeout(() => {
+        dispatch(deleteTask(taskToDelete));
+        setShowDeletePopup(false);
+        setTaskToDelete(null);
+        setDeletingTaskId(null);
+      }, 300);
     }
   };
 
@@ -73,8 +78,14 @@ function TaskList() {
               <span className={styles.text}>There are no tasks!</span>
             </li>
           )}
-          {filteredTasks.map((task) => (
-            <li className={styles.task} key={task.id}>
+          {filteredTasks.map((task, index) => (
+            <li
+              className={`${styles.task} ${
+                deletingTaskId === task.id ? styles.deleting : ""
+              }`}
+              key={task.id}
+              style={{ animationDelay: `${index * 0.08}s` }}
+            >
               <div className={styles.taskTitle}>
                 <input
                   type="checkbox"

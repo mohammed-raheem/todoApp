@@ -31,11 +31,13 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .addBtn:hover {
   background-color: #838ef1;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .tasks {
@@ -56,6 +58,21 @@
   margin-bottom: 15px;
   border-radius: 5px;
   background-color: #fff;
+  animation: slideInFromBottom 0.3s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+  animation-fill-mode: forwards;
+  transition: all 0.3s ease-out;
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.task.deleting {
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
 }
 
 .task:last-of-type {
@@ -83,10 +100,12 @@
 .taskTitle input[type="checkbox"]:checked + span {
   text-decoration: line-through;
   color: #ccc;
+  transform: translateX(5px);
 }
 
 .taskTitle span {
   color: #646681;
+  transition: all 0.3s ease-in-out;
 }
 
 .editBtn,
@@ -157,5 +176,17 @@
 
   .editBtn img {
     width: 50%;
+  }
+}
+
+/* animation */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
