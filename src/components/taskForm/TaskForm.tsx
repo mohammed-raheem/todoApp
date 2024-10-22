@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, Task } from "../../types";
+import { RootState } from "../../types";
 import { addTask, editTask } from "../../redux/tasksSlice";
 import Logout from "../logout/Logout";
 import NotificationPopup from "../notificationPopup/NotificationPopup";
