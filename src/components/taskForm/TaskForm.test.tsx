@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import configureStore from "redux-mock-store";
@@ -39,7 +39,7 @@ describe("TaskForm", () => {
     expect(screen.getByRole("button", { name: "Add" })).toBeInTheDocument();
   });
 
-  it("handles adding a new task", () => {
+  it("handles adding a new task", async () => {
     const store = mockStore(initialState);
     render(
       <Provider store={store}>
@@ -49,10 +49,12 @@ describe("TaskForm", () => {
       </Provider>
     );
 
-    fireEvent.change(screen.getByPlaceholderText("Task name"), {
-      target: { value: "New Task" },
+    await act(async () => {
+      fireEvent.change(screen.getByPlaceholderText("Task name"), {
+        target: { value: "New Task" },
+      });
+      fireEvent.click(screen.getByRole("button", { name: "Add" }));
     });
-    fireEvent.click(screen.getByRole("button", { name: "Add" }));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual({ type: "tasks/addTask", payload: "New Task" });
@@ -75,7 +77,7 @@ describe("TaskForm", () => {
     expect(screen.getByRole("button", { name: "Edit" })).toBeInTheDocument();
   });
 
-  it("handles editing a task", () => {
+  it("handles editing a task", async () => {
     mockParams = { taskId: "1" };
 
     const store = mockStore(initialState);
@@ -87,10 +89,12 @@ describe("TaskForm", () => {
       </Provider>
     );
 
-    fireEvent.change(screen.getByDisplayValue("Task 1"), {
-      target: { value: "Updated Task" },
+    await act(async () => {
+      fireEvent.change(screen.getByDisplayValue("Task 1"), {
+        target: { value: "Updated Task" },
+      });
+      fireEvent.click(screen.getByRole("button", { name: "Edit" }));
     });
-    fireEvent.click(screen.getByRole("button", { name: "Edit" }));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual({

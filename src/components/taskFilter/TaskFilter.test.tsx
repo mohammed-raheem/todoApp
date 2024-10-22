@@ -10,7 +10,11 @@ describe("TaskFilter", () => {
 
   beforeEach(() => {
     render(
-      <TaskFilter tasks={mockTasks} setFilteredTasks={mockSetFilteredTasks} />
+      <TaskFilter
+        tasks={mockTasks}
+        setFilteredTasks={mockSetFilteredTasks}
+        setCurrentFilter={jest.fn()}
+      />
     );
   });
 
